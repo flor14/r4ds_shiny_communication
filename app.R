@@ -176,24 +176,23 @@ ui <- fluidPage(
     tabPanel("Resize image",
              sidebarLayout(
                div(style = "font-size: 13px; padding: 14px 0px; margin:0%",
-                   sidebarPanel(p("ggplot(mpg, aes(displ, hwy)) +", style = "padding: 0px 0px; margin-top:0em"), br(), 
-                                p("geom_point(aes(color = class)) +", style = "padding: 0px 0px; margin-top:-1em"), br(),
-                                p("geom_smooth(se = FALSE) +", style = "padding: 0px 0px; margin-top:-1em"), br(),   
+                   sidebarPanel(p("ggsave(filename = plot.png,", style = "padding: 0px 0px; margin-top:0em"),  
                                 numericInput("height", "height =", value = 10),
                                 numericInput("width", "width =", value = 15),
                                 numericInput("dpi", "dpi =", value = 600),
                                 numericInput("scale", "scale =", value = 1),
-                                selectInput("units", "units =", choices = c("in", "cm", "mm"), selected = "cm")
+                                selectInput("units", "units =", choices = c("in", "cm", "mm"), selected = "cm"),
+                                p(")", style = "padding: 0px 0px; margin-top:0em")
                 ) #sidebarpanel
                ), #div
                mainPanel(
-                 h5("Nota como cambian el tamaño de los puntos y las letras al cambiar el tamaño de salida de la imagen"),
+                 p("Nota como cambian el tamaño de los puntos y las letras al cambiar el tamaño de salida de la imagen", style = "padding: 0px 0px; margin-top:-1em"),
                  imageOutput("myImage"))#mainpanel
              ) #sidebarlayout
     ),#tabpanel
     tabPanel("Links",
              list(ui = fluidPage(
-               uiOutput("tab"))
+               uiOutput("tab"), br(), uiOutput("tab2"), br(), uiOutput("tab3") )
                )#list
     ) #tabpanel
     ) #navbarpage
@@ -433,9 +432,13 @@ server <- function(input, output, session) {
           output$tab <- renderUI({
             tagList("R4DS resuelto:", url)})
           
-          url2 <- a("cheatsheet", href="https://jrnold.github.io/r4ds-exercise-solutions/graphics-for-communication.html")
+          url2 <- a("cheatsheet", href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf")
           output$tab2 <- renderUI({
             tagList("ggplot2:", url2)})
+          
+          url3 <- a("colorbrewer", href="http://colorbrewer2.org/")
+          output$tab3 <- renderUI({
+            tagList("scales:", url3)})
         
 }
 
